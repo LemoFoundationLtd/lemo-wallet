@@ -5,7 +5,7 @@ import pkg from './package.json'
 export default [
     {
         input: 'lib/index.js',
-        external: ['bignumber.js', 'axios', 'safe-buffer', 'elliptic', 'keccak', 'base-x'],
+        external: ['bignumber.js', 'safe-buffer', 'elliptic', 'keccak', 'base-x'],
         output: [
             {file: pkg.main, format: 'cjs'}, // CommonJS (for Node) build
         ],
@@ -13,7 +13,7 @@ export default [
     },
     {
         input: 'lib/index.js',
-        external: ['bignumber.js', 'axios', 'safe-buffer', 'elliptic', 'keccak', 'base-x'],
+        external: ['bignumber.js', 'safe-buffer', 'elliptic', 'keccak', 'base-x'],
         output: [
             {file: pkg.browser, format: 'cjs'}, // CommonJS (for Node) build
         ],

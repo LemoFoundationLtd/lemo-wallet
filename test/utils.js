@@ -13,30 +13,23 @@ describe('utils_encodePrivate_and_decodePrivate', () => {
         const priv = '0x59d06271da5276ae03fd2e18fbc78fc91e7405f08d33c5e02cbb74e06d9b322f'
         const encode = Utils.encodePrivate(priv, '0xwjfjfkfkkdkk')
         assert.throws(() => {
-            const a = Utils.decodePrivate(encode, '0fjfkdkk')
-            console.log(a)
+            Utils.decodePrivate(encode, '0fjfkdkk')
         }, errors.DecryptionError())
     })
 })
 
-describe('utils_getGenerateAccount', () => {
-    it('mnemonic_to_account', () => {
+describe('utils_encodeMnemonic_and_decodeMnemonic', () => {
+    it('normal', () => {
         const mnemonic = 'leader verify nut neither motion memory shallow where volcano monkey edge carpet'
-        const name = 'demo'
-        const a = Utils.buildAccount(mnemonic, name)
-        assert.equal(a.mnemonic, mnemonic)
+        const encode = Utils.encodeMnemonic(mnemonic, '0xwjfjfkfkkdkk')
+        const result = Utils.decodeMnemonic(encode, '0xwjfjfkfkkdkk')
+        assert.equal(result, mnemonic)
     })
-    it('mnemonic_is_array', () => {
+    it('wrong password', () => {
         const mnemonic = ['leader', 'verify', 'nut', 'neither', 'motion', 'memory', 'shallow', 'where', 'volcano', 'monkey', 'edge', 'carpet']
-        const name = 'demo'
-        const a = Utils.buildAccount(mnemonic, name)
-        assert.equal(a.addressName, name)
-    })
-    it('mnemonic_only_11_word', () => {
-        const mnemonic = 'leader nut neither motion memory shallow where volcano monkey edge carpet'
-        const name = 'demo'
+        const encode = Utils.encodeMnemonic(mnemonic, '0xwjfjfkfkkdkk')
         assert.throws(() => {
-            Utils.buildAccount(mnemonic, name)
-        }, errors.MnemonicLengthError())
+            Utils.decodeMnemonic(encode, '0fjfkdkk')
+        }, errors.DecryptionError())
     })
 })

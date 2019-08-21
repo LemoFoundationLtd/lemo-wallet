@@ -6,22 +6,22 @@
 [![Coverage Status](https://coveralls.io/repos/github/LemoFoundationLtd/lemo-wallet/badge.svg?branch=master)](https://coveralls.io/github/LemoFoundationLtd/lemo-wallet?branch=master)
 [![GitHub license](https://img.shields.io/badge/license-LGPL3.0-blue.svg?style=flat-square)](https://github.com/LemoFoundationLtd/lemo-wallet/blob/master/LICENSE)
 
-This is the LemoChain Wallet library which is used to manage private keys.
+这是用于管理私钥的LemoChain钱包库。
 
 
 
-## Installing
+## 安装
 
-### Using Yarn
+### yarn
 
 ```bash
 yarn add lemo-wallet
 ```
 
-### As Browser module
+### 浏览器
 
-* Include `lemo-wallet.js` in your html file.
-* Use the `LemoWallet` object directly from global namespace
+* 在您的html文件中加入 `lemo-wallet.js`js文件
+* 全局使用 `LemoWallet`对象
 
 ## Example
 
@@ -32,19 +32,19 @@ const wallet = new LemoWallet({})
 
 ##lemoWallet API
 
-| API                                                                        | description                         
+| API                                                                        | 功能                         
 | -------------------------------------------------------------------------- | ------------------------------ |
-| [wallet.savePassword(password)](#submodule-wallet-savePassword)         | Save your wallet password       |
-| [wallet.createAccount(addressName, password)](#submodule-wallet-createAccount)         | Create account       |
-| [wallet.importMnemonic(mnemonic, addressName, password)](#submodule-wallet-importMnemonic)         | Restore the account information by import mnemonic words       |
-| [wallet.importPrivate(privKey, addressName, password)](#submodule-wallet-importPrivate)         | Restore the account information by import the private key       |
-| [wallet.exportMnemonic(address, password)](#submodule-wallet-exportMnemonic)         | Export mnemonic words       |
-| [wallet.exportPrivateKey(address, password)](#submodule-wallet-exportPrivateKey)         | Export the private key       |
-| [wallet.getAccountList()](#submodule-wallet-getAccountList)         | Pull the account list       |
-| [wallet.sign(address, txConfig, password)](#submodule-wallet-sign)         | Signed ordinary transaction       |
-| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#submodule-wallet-signAsset)         | Signed asset transaction       |
-| [wallet.modifyPassword(oldPassword, newPassword)](#submodule-wallet-modifyPassword)         | Modify password       |
-| [wallet.deleteAccount(address, password)](#submodule-wallet-deleteAccount)         | Delete account information       |
+| [wallet.savePassword(password)](#submodule-wallet-savePassword)         | 保存钱包密码       |
+| [wallet.createAccount(addressName, password)](#submodule-wallet-createAccount)         | 创建账户       |
+| [wallet.importMnemonic(mnemonic, addressName, password)](#submodule-wallet-importMnemonic)         | 通过导入助记词还原账户信息       |
+| [wallet.importPrivate(privKey, addressName, password)](#submodule-wallet-importPrivate)         | 通过导入私钥还原账户信息       |
+| [wallet.exportMnemonic(address, password)](#submodule-wallet-exportMnemonic)         | 导出助记词       |
+| [wallet.exportPrivateKey(address, password)](#submodule-wallet-exportPrivateKey)         | 导出私钥       |
+| [wallet.getAccountList()](#submodule-wallet-getAccountList)         | 拉取账户列表       |
+| [wallet.sign(address, txConfig, password)](#submodule-wallet-sign)         | 签名普通交易       |
+| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#submodule-wallet-signAsset)         | 签名资产交易       |
+| [wallet.modifyPassword(oldPassword, newPassword)](#submodule-wallet-modifyPassword)         | 修改密码       |
+| [wallet.deleteAccount(address, password)](#submodule-wallet-deleteAccount)         | 删除账户信息       |
 
 
 
@@ -60,13 +60,13 @@ sudo apt-get update
 sudo apt-get install nodejs
 sudo apt-get install yarn
 ```
-## data structure
+## 数据结构
 
 <a name="data-structure-account"></a>
 
 #### account
 
-account information
+账户信息
 
 ```json
 {
@@ -78,11 +78,11 @@ account information
 }
 ```
 
--   `address` lemoChain address
--   `addressName` account name
--   `privateKey` private key, Save as encrypted private key information
--   `mnemonic` mnemonic, consists of 12 words, encrypted and stored locally to the user
--   `basePath` path, path to generate the private key
+-   `address` lemo地址
+-   `addressName` 账户名
+-   `privateKey` 私钥，保存时为加密之后的私钥信息
+-   `mnemonic` 助记词，由12个单词组成，加密之后存储到用户本地
+-   `basePath` 路径，主要为生成私钥的路径
 
 
 ## API
@@ -95,15 +95,15 @@ account information
 wallet.savePassword(password)
 ```
 
-Create and save the password and store the encrypted password local
+创建并保存密码，并将加密之后的密码存入用户本地
 
 ##### Parameters
 
-1. `string` - The password set by the user
+1. `string` - 用户设置的密码
 
 ##### Returns
 
-None
+无返回值
 
 ##### Example
 
@@ -122,17 +122,16 @@ wallet.savePassword(pwd)
 wallet.createAccount(addressName, password)
 ```
 
-Create account and return the generated account information.
-Verify that the password is the same before generating the account information
+生成账户，并返回生成的账户信息，在生成账户信息之前需要校验密码是否相同
 
 ##### Parameters
 
-1. `string` - account name
-2. `string` - password
+1. `string` - 账户名称
+2. `string` - 密码
 
 ##### Returns
 
-`object` - Return account information. Details refer to[account Information](#data-structure-account)
+`object` - 最后返回账户信息，细节参考[账户信息](#data-structure-account)
 
 ##### Example
 
@@ -152,17 +151,17 @@ console.log(JSON.stringify(result)) // {"privKey":"0xf9d8b666237ad79877cb8356c97
 wallet.importMnemonic(mnemonic, addressName, password)
 ```
 
-Verify the password is correct, then import mnemonic words, restore the account information
+校验密码是否正确，然后导入助记词，还原账户信息
 
 ##### Parameters
 
-1. `string|array` - mnemonic
-2. `string` - account name
-3. `string` - password
+1. `string|array` - 助记词
+2. `string` - 账户名称
+3. `string` - 密码
 
 ##### Returns
 
-`object` - Return account information. Details refer to[account Information](#data-structure-account)
+`object` - 生成账户信息，细节参考[账户信息](#data-structure-account)
 
 ##### Example
 
@@ -184,17 +183,17 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 wallet.importPrivate(privKey, addressName, password)
 ```
 
-Import the private key, restore the account information, before you need to verify the password
+导入私钥，还原账户信息，在此之前需要校验密码
 
 ##### Parameters
 
-1. `string` - privKey
-2. `string` - account name
-3. `string` - password
+1. `string` - 账户私钥
+2. `string` - 账户名称
+3. `string` - 密码
 
 ##### Returns
 
-`object` - Return account information and no mnemonic. Details refer to[account Information](#data-structure-account)
+`object` - 生成账户信息，细节参考[账户信息](#data-structure-account), 其中还原账户中无助记词
 
 ##### Example
 
@@ -216,16 +215,16 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 wallet.exportMnemonic(address, password)
 ```
 
-Verify the user's password, find the user's locally stored account information through the account address, and export the mnemonic
+校验用户的密码，通过账户地址找到用户本地存储的账户信息，然后导出助记词
 
 ##### Parameters
 
-1. `string` - address
-2. `string` - password
+1. `string` - 账户地址
+2. `string` - 密码
 
 ##### Returns
 
-`array` - mnemonic
+`array` - 助记词
 
 ##### Example
 
@@ -246,16 +245,16 @@ console.log(result) // ['certain', 'blade', 'someone', 'unusual', 'time', 'clari
 wallet.exportPrivateKey(address, password)
 ```
 
-Verify the user password, find the user's locally stored account information through the account address, and then export the private key
+校验用户密码，通过账户地址找到用户本地存储的账户信息，然后导出私钥
 
 ##### Parameters
 
-1. `string` - address
-2. `string` - password
+1. `string` - 账户地址
+2. `string` - 密码
 
 ##### Returns
 
-`string` - PrivateKey
+`string` - 私钥
 
 ##### Example
 
@@ -276,17 +275,17 @@ console.log(result) //"0xf9d8b666237ad79877cb8356c97f3aaa503700bb37a9c19767e97f0
 wallet.getAccountList()
 ```
 
-get account lists
+拉取账户列表
 
 ##### Parameters
 
-None
+无
 
 ##### Returns
 
-`array` - account list, include the following fields：
-- `addressName` account name
-- `address` address
+`array` - 账户列表，包括以下字段：
+- `addressName` 账户名
+- `address` 账户地址
 
 ##### Example
 
@@ -305,17 +304,17 @@ console.log(result) // [ { addressName: 'hello',address: 'Lemo83S826GC446HF2FWQ2
 wallet.sign(address, txConfig, password)
 ```
 
-Check the password, sign ordinary transactions
+校验密码，签名普通交易
 
 ##### Parameters
 
-1. `string` - address
-2. `object` - Sign transaction information
-3. `string` - password
+1. `string` - 账户地址
+2. `object` - 签名的交易信息
+3. `string` - 密码
 
 ##### Returns
 
-`string` - Sign information string
+`string` - 签名信息字符串
 
 ##### Example
 
@@ -341,18 +340,18 @@ const result = wallet.sign(address, txConfig, password)// {"type":"0","version":
 wallet.signAsset(address, txConfig, transferAssetInfo, password)
 ```
 
-Verify passwords, sign asset transactions
+校验密码，签名资产交易
 
 ##### Parameters
 
-1. `string` - address
-2. `object` - Signed transaction information
-3. `object` - Signed asset information
-4. `string` - password
+1. `string` - 账户地址
+2. `object` - 签名的交易信息
+3. `object` - 签名的资产信息
+4. `string` - 密码
 
 ##### Returns
 
-`string` - Sign information string
+`string` - 签名信息字符串
 
 ##### Example
 
@@ -380,16 +379,16 @@ console.log(JSON.stringify(a)) // {"type":"8","version":"1","chainID":"100","fro
 wallet.modifyPassword(oldPassword, newPassword)
 ```
 
-Verify and change the password
+校验并修改密码
 
 ##### Parameters
 
-1. `string` - old password
-2. `string` - new password
+1. `string` - 旧密码
+2. `string` - 新密码
 
 ##### Returns
 
-None
+无
 
 ##### Example
 
@@ -409,16 +408,16 @@ wallet.modifyPassword(oldPassword, newPassword)
 wallet.deleteAccount(address, password)
 ```
 
-Verify password and delete account information
+校验密码，删除该地址下的账户信息
 
 ##### Parameters
 
-1. `string` - address
-2. `string` - password
+1. `string` - 账户地址
+2. `string` - 密码
 
 ##### Returns
 
-None
+无
 
 ##### Example
 

@@ -42,7 +42,6 @@ const wallet = new LemoWallet({})
 | [wallet.exportPrivateKey(address, password)](#wallet-exportPrivateKey)         | Export the private key       |
 | [wallet.getAccountList()](#wallet-getAccountList)         | Load the account list       |
 | [wallet.sign(address, txConfig, password)](#wallet-sign)         | Sign transaction       |
-| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#wallet-signAsset)         | A shortcut to create and sign asset transaction       |
 | [wallet.modifyPassword(oldPassword, newPassword)](#wallet-modifyPassword)         | Modify password       |
 | [wallet.deleteAccount(address, password)](#wallet-deleteAccount)         | Delete account information       |
 
@@ -83,6 +82,15 @@ account information
 -   `privateKey` private key, Save as encrypted private key information
 -   `mnemonic` mnemonic, consists of 12 words, encrypted and stored locally to the user
 -   `basePath` path, path to generate the private key
+
+<a name="data-structure-storage"></a>
+
+#### storage
+
+Storage functions object
+
+-   `setItem(key, value)` The function to store data into storage, both parameters are strings
+-   `getItem(key)` Get the data stored in storage by key, The argument and return value are both strings
 
 
 ## API
@@ -328,45 +336,6 @@ const txConfig = {
 const password = '123AbC789'
 const address = 'Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q'
 const result = wallet.sign(address, txConfig, password)// {"type":"0","version":"1","chainID":"100","from":"Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q","gasPrice":"3000000000","gasLimit":"2000000","amount":"1000","expirationTime":"1566352964","to":"Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG","sigs":["0xab17544ad52e965c71c67458911bb025020f58de0b147dd22f614347ac8bbe70121ef1c174860eebb7f63c8e0ec1c9f47e6e76851be08950c92bb8dec906e90301"],"gasPayerSigs":[]}
-```
-
----
-
-<a name="wallet-signAsset"></a>
-
-#### wallet.signAsset
-
-```
-wallet.signAsset(address, txConfig, transferAssetInfo, password)
-```
-
-Verify passwords, sign asset transfer transaction
-
-##### Parameters
-
-1. `string` - address
-2. `object` - The constructor params for [lemo-tx](https://github.com/LemoFoundationLtd/lemo-tx#constructor)
-3. `object` - Transaction assets information which includes `assetID` and `transferAmount` fields
-4. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
-
-##### Returns
-
-`string` - Signed information string
-
-##### Example
-
-```js
-const password = '123AbC789'
-const address = 'Lemo83QTS9H6DDWRC77SG774PF46TD46YA8RCBD7'
-const txConfig = {
-    chainID: 100,
-    from: 'Lemo83QTS9H6DDWRC77SG774PF46TD46YA8RCBD7',
-    to: 'Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG',
-    amount: '1000',
-}
-const transaferInfo = {assetId: '0xa458186f3f407e417196c388b11fa2517f2b9af0690671b8cd3d27ba6926280c', transferAmount: '2225'}
-const result = wallet.signAsset(address, txConfig, transaferInfo, password)
-console.log(JSON.stringify(a)) // {"type":"8","version":"1","chainID":"100","from":"Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q","gasPrice":"3000000000","gasLimit":"2000000","amount":"0","expirationTime":"1566368368","to":"Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG","data":"0x7b2261737365744964223a22307861343538313836663366343037653431373139366333383862313166613235313766326239616630363930363731623863643364323762613639323632383063222c227472616e73666572416d6f756e74223a2232323235227d","sigs":["0x0e1442ab0812dbacec4a47e9b7c3f26e7a7e368762069fc9fd7264e42ca7ff102d530985f23c5689a0a63343d2053bb1af179b8ff183f173351b0daf580a113200"],"gasPayerSigs":[]}
 ```
 
 ---

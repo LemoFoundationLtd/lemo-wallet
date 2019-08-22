@@ -29,10 +29,10 @@ const wallet = new LemoWallet()
 wallet.storage = testStorage
 
 // 保存密码
-describe('utils_savePassword', () => {
+describe('utils_setupPassword', () => {
     it('save success', () => {
         const passw = '123AbC789'
-        const result = wallet.savePassword(passw)
+        const result = wallet.setupPassword(passw)
         assert.equal(result, testStorage.memory[PASSWORD_HASH])
     })
 })

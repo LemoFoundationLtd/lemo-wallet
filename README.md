@@ -1,5 +1,3 @@
-![Logo of the project](./logo.png)
-
 # LemoChain Wallet
 [![npm](https://img.shields.io/npm/v/lemo-wallet.svg?style=flat-square)](https://www.npmjs.com/package/lemo-wallet)
 [![Build Status](https://travis-ci.org/LemoFoundationLtd/lemo-wallet.svg?branch=master)](https://travis-ci.org/LemoFoundationLtd/lemo-wallet)
@@ -9,6 +7,8 @@
 This is the LemoChain Wallet library which is used to manage private keys.
 
 
+[中文版](https://github.com/LemoFoundationLtd/lemo-wallet/blob/master/README_ZH.md)  
+[English](https://github.com/LemoFoundationLtd/lemo-wallet/blob/master/README.md)
 
 ## Installing
 
@@ -34,17 +34,17 @@ const wallet = new LemoWallet({})
 
 | API                                                                        | description                         
 | -------------------------------------------------------------------------- | ------------------------------ |
-| [wallet.savePassword(password)](#submodule-wallet-savePassword)         | Save your wallet password       |
-| [wallet.createAccount(addressName, password)](#submodule-wallet-createAccount)         | Create account       |
-| [wallet.importMnemonic(mnemonic, addressName, password)](#submodule-wallet-importMnemonic)         | Restore the account information by import mnemonic words       |
-| [wallet.importPrivate(privKey, addressName, password)](#submodule-wallet-importPrivate)         | Restore the account information by import the private key       |
-| [wallet.exportMnemonic(address, password)](#submodule-wallet-exportMnemonic)         | Export mnemonic words       |
-| [wallet.exportPrivateKey(address, password)](#submodule-wallet-exportPrivateKey)         | Export the private key       |
-| [wallet.getAccountList()](#submodule-wallet-getAccountList)         | Pull the account list       |
-| [wallet.sign(address, txConfig, password)](#submodule-wallet-sign)         | Signed ordinary transaction       |
-| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#submodule-wallet-signAsset)         | Signed asset transaction       |
-| [wallet.modifyPassword(oldPassword, newPassword)](#submodule-wallet-modifyPassword)         | Modify password       |
-| [wallet.deleteAccount(address, password)](#submodule-wallet-deleteAccount)         | Delete account information       |
+| [wallet.setupPassword(password)](#wallet-setupPassword)         | Setup wallet password       |
+| [wallet.createAccount(addressName, password)](#wallet-createAccount)         | Create account       |
+| [wallet.importMnemonic(mnemonic, addressName, password)](#wallet-importMnemonic)         | Restore the account information by import mnemonic words       |
+| [wallet.importPrivate(privKey, addressName, password)](#wallet-importPrivate)         | Restore the account information by import the private key       |
+| [wallet.exportMnemonic(address, password)](#wallet-exportMnemonic)         | Export mnemonic words       |
+| [wallet.exportPrivateKey(address, password)](#wallet-exportPrivateKey)         | Export the private key       |
+| [wallet.getAccountList()](#wallet-getAccountList)         | Load the account list       |
+| [wallet.sign(address, txConfig, password)](#wallet-sign)         | Sign transaction       |
+| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#wallet-signAsset)         | A shortcut to create and sign asset transaction       |
+| [wallet.modifyPassword(oldPassword, newPassword)](#wallet-modifyPassword)         | Modify password       |
+| [wallet.deleteAccount(address, password)](#wallet-deleteAccount)         | Delete account information       |
 
 
 
@@ -87,15 +87,15 @@ account information
 
 ## API
 
-<a name="submodule-wallet-savePassword"></a>
+<a name="wallet-setupPassword"></a>
 
-#### wallet.savePassword
+#### wallet.setupPassword
 
 ```
-wallet.savePassword(password)
+wallet.setupPassword(password)
 ```
 
-Create and save the password and store the encrypted password local
+Create and save the password and store the encrypted password to storage
 
 ##### Parameters
 
@@ -109,12 +109,12 @@ None
 
 ```js
 const pwd = '12345678'
-wallet.savePassword(pwd)
+wallet.setupPassword(pwd)
 ```
 
 ---
 
-<a name="submodule-wallet-createAccount"></a>
+<a name="wallet-createAccount"></a>
 
 #### wallet.createAccount
 
@@ -123,12 +123,11 @@ wallet.createAccount(addressName, password)
 ```
 
 Create account and return the generated account information.
-Verify that the password is the same before generating the account information
 
 ##### Parameters
 
 1. `string` - account name
-2. `string` - password
+2. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -144,7 +143,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xf9d8b666237ad79877cb8356c97
 
 ---
 
-<a name="submodule-wallet-importMnemonic"></a>
+<a name="wallet-importMnemonic"></a>
 
 #### wallet.importMnemonic
 
@@ -152,13 +151,13 @@ console.log(JSON.stringify(result)) // {"privKey":"0xf9d8b666237ad79877cb8356c97
 wallet.importMnemonic(mnemonic, addressName, password)
 ```
 
-Verify the password is correct, then import mnemonic words, restore the account information
+Import mnemonic words, restore the account information
 
 ##### Parameters
 
 1. `string|array` - mnemonic
-2. `string` - account name
-3. `string` - password
+2. `string` - addressName
+2. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -176,7 +175,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 
 ---
 
-<a name="submodule-wallet-importPrivate"></a>
+<a name="wallet-importPrivate"></a>
 
 #### wallet.importPrivate
 
@@ -184,13 +183,13 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 wallet.importPrivate(privKey, addressName, password)
 ```
 
-Import the private key, restore the account information, before you need to verify the password
+Import the private key, restore the account information
 
 ##### Parameters
 
 1. `string` - privKey
-2. `string` - account name
-3. `string` - password
+2. `string` - addressName
+3. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -208,7 +207,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 
 ---
 
-<a name="submodule-wallet-exportMnemonic"></a>
+<a name="wallet-exportMnemonic"></a>
 
 #### wallet.exportMnemonic
 
@@ -221,7 +220,7 @@ Verify the user's password, find the user's locally stored account information t
 ##### Parameters
 
 1. `string` - address
-2. `string` - password
+2. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -238,7 +237,7 @@ console.log(result) // ['certain', 'blade', 'someone', 'unusual', 'time', 'clari
 
 ---
 
-<a name="submodule-wallet-exportPrivateKey"></a>
+<a name="wallet-exportPrivateKey"></a>
 
 #### wallet.exportPrivateKey
 
@@ -251,7 +250,7 @@ Verify the user password, find the user's locally stored account information thr
 ##### Parameters
 
 1. `string` - address
-2. `string` - password
+2. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -268,7 +267,7 @@ console.log(result) //"0xf9d8b666237ad79877cb8356c97f3aaa503700bb37a9c19767e97f0
 
 ---
 
-<a name="submodule-wallet-getAccountList"></a>
+<a name="wallet-getAccountList"></a>
 
 #### wallet.getAccountList
 
@@ -276,7 +275,7 @@ console.log(result) //"0xf9d8b666237ad79877cb8356c97f3aaa503700bb37a9c19767e97f0
 wallet.getAccountList()
 ```
 
-get account lists
+load account lists
 
 ##### Parameters
 
@@ -284,9 +283,9 @@ None
 
 ##### Returns
 
-`array` - account list, include the following fields：
-- `addressName` account name
-- `address` address
+`array` - account list, it includes the following fields：
+- `string` addressName
+- `string` address
 
 ##### Example
 
@@ -297,7 +296,7 @@ console.log(result) // [ { addressName: 'hello',address: 'Lemo83S826GC446HF2FWQ2
 
 ---
 
-<a name="submodule-wallet-sign"></a>
+<a name="wallet-sign"></a>
 
 #### wallet.sign
 
@@ -305,13 +304,13 @@ console.log(result) // [ { addressName: 'hello',address: 'Lemo83S826GC446HF2FWQ2
 wallet.sign(address, txConfig, password)
 ```
 
-Check the password, sign ordinary transactions
+Verify the password, sign transaction
 
 ##### Parameters
 
 1. `string` - address
-2. `object` - Sign transaction information
-3. `string` - password
+2. `object` - The constructor params for [lemo-tx](https://github.com/LemoFoundationLtd/lemo-tx#constructor)
+3. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -333,7 +332,7 @@ const result = wallet.sign(address, txConfig, password)// {"type":"0","version":
 
 ---
 
-<a name="submodule-wallet-signAsset"></a>
+<a name="wallet-signAsset"></a>
 
 #### wallet.signAsset
 
@@ -341,18 +340,18 @@ const result = wallet.sign(address, txConfig, password)// {"type":"0","version":
 wallet.signAsset(address, txConfig, transferAssetInfo, password)
 ```
 
-Verify passwords, sign asset transactions
+Verify passwords, sign asset transfer transaction
 
 ##### Parameters
 
 1. `string` - address
-2. `object` - Signed transaction information
-3. `object` - Signed asset information
-4. `string` - password
+2. `object` - The constructor params for [lemo-tx](https://github.com/LemoFoundationLtd/lemo-tx#constructor)
+3. `object` - Transaction assets information which includes `assetID` and `transferAmount` fields
+4. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
-`string` - Sign information string
+`string` - Signed information string
 
 ##### Example
 
@@ -372,7 +371,7 @@ console.log(JSON.stringify(a)) // {"type":"8","version":"1","chainID":"100","fro
 
 ---
 
-<a name="submodule-wallet-modifyPassword"></a>
+<a name="wallet-modifyPassword"></a>
 
 #### wallet.modifyPassword
 
@@ -401,7 +400,7 @@ wallet.modifyPassword(oldPassword, newPassword)
 
 ---
 
-<a name="submodule-wallet-deleteAccount"></a>
+<a name="wallet-deleteAccount"></a>
 
 #### wallet.deleteAccount
 
@@ -414,7 +413,7 @@ Verify password and delete account information
 ##### Parameters
 
 1. `string` - address
-2. `string` - password
+2. `string` - The password that passed in the [setupPassword](#wallet-setupPassword)
 
 ##### Returns
 
@@ -424,7 +423,7 @@ None
 
 ```js
 const address = 'Lemo83QTS9H6DDWRC77SG774PF46TD46YA8RCBD7'
-const passWord = '123AbC789'
+const password = '123AbC789'
 wallet.deleteAccount(address, password)
 ```
 

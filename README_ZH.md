@@ -1,5 +1,3 @@
-![Logo of the project](./logo.png)
-
 # LemoChain Wallet
 [![npm](https://img.shields.io/npm/v/lemo-wallet.svg?style=flat-square)](https://www.npmjs.com/package/lemo-wallet)
 [![Build Status](https://travis-ci.org/LemoFoundationLtd/lemo-wallet.svg?branch=master)](https://travis-ci.org/LemoFoundationLtd/lemo-wallet)
@@ -9,6 +7,8 @@
 这是用于管理私钥的LemoChain钱包库。
 
 
+[中文版](https://github.com/LemoFoundationLtd/lemo-wallet/blob/master/README_ZH.md)  
+[English](https://github.com/LemoFoundationLtd/lemo-wallet/blob/master/README.md)
 
 ## 安装
 
@@ -34,17 +34,17 @@ const wallet = new LemoWallet({})
 
 | API                                                                        | 功能                         
 | -------------------------------------------------------------------------- | ------------------------------ |
-| [wallet.savePassword(password)](#submodule-wallet-savePassword)         | 保存钱包密码       |
-| [wallet.createAccount(addressName, password)](#submodule-wallet-createAccount)         | 创建账户       |
-| [wallet.importMnemonic(mnemonic, addressName, password)](#submodule-wallet-importMnemonic)         | 通过导入助记词还原账户信息       |
-| [wallet.importPrivate(privKey, addressName, password)](#submodule-wallet-importPrivate)         | 通过导入私钥还原账户信息       |
-| [wallet.exportMnemonic(address, password)](#submodule-wallet-exportMnemonic)         | 导出助记词       |
-| [wallet.exportPrivateKey(address, password)](#submodule-wallet-exportPrivateKey)         | 导出私钥       |
-| [wallet.getAccountList()](#submodule-wallet-getAccountList)         | 拉取账户列表       |
-| [wallet.sign(address, txConfig, password)](#submodule-wallet-sign)         | 签名普通交易       |
-| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#submodule-wallet-signAsset)         | 签名资产交易       |
-| [wallet.modifyPassword(oldPassword, newPassword)](#submodule-wallet-modifyPassword)         | 修改密码       |
-| [wallet.deleteAccount(address, password)](#submodule-wallet-deleteAccount)         | 删除账户信息       |
+| [wallet.setupPassword(password)](#wallet-setupPassword)         | 设置钱包密码       |
+| [wallet.createAccount(addressName, password)](#wallet-createAccount)         | 创建账户       |
+| [wallet.importMnemonic(mnemonic, addressName, password)](#wallet-importMnemonic)         | 通过导入助记词还原账户信息       |
+| [wallet.importPrivate(privKey, addressName, password)](#wallet-importPrivate)         | 通过导入私钥还原账户信息       |
+| [wallet.exportMnemonic(address, password)](#wallet-exportMnemonic)         | 导出助记词       |
+| [wallet.exportPrivateKey(address, password)](#wallet-exportPrivateKey)         | 导出私钥       |
+| [wallet.getAccountList()](#wallet-getAccountList)         | 获取账户列表       |
+| [wallet.sign(address, txConfig, password)](#wallet-sign)         | 签名交易       |
+| [wallet.signAsset(address, txConfig, transferAssetInfo, password)](#wallet-signAsset)         | 创建并签名资产交易的快捷方法       |
+| [wallet.modifyPassword(oldPassword, newPassword)](#wallet-modifyPassword)         | 修改密码       |
+| [wallet.deleteAccount(address, password)](#wallet-deleteAccount)         | 删除账户信息       |
 
 
 
@@ -87,15 +87,15 @@ sudo apt-get install yarn
 
 ## API
 
-<a name="submodule-wallet-savePassword"></a>
+<a name="wallet-setupPassword"></a>
 
-#### wallet.savePassword
+#### wallet.setupPassword
 
 ```
-wallet.savePassword(password)
+wallet.setupPassword(password)
 ```
 
-创建并保存密码，并将加密之后的密码存入用户本地
+创建并保存密码，并将加密之后的密码存入storage
 
 ##### Parameters
 
@@ -109,12 +109,12 @@ wallet.savePassword(password)
 
 ```js
 const pwd = '12345678'
-wallet.savePassword(pwd)
+wallet.setupPassword(pwd)
 ```
 
 ---
 
-<a name="submodule-wallet-createAccount"></a>
+<a name="wallet-createAccount"></a>
 
 #### wallet.createAccount
 
@@ -122,12 +122,12 @@ wallet.savePassword(pwd)
 wallet.createAccount(addressName, password)
 ```
 
-生成账户，并返回生成的账户信息，在生成账户信息之前需要校验密码是否相同
+生成账户，并返回生成的账户信息
 
 ##### Parameters
 
 1. `string` - 账户名称
-2. `string` - 密码
+2. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -143,7 +143,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xf9d8b666237ad79877cb8356c97
 
 ---
 
-<a name="submodule-wallet-importMnemonic"></a>
+<a name="wallet-importMnemonic"></a>
 
 #### wallet.importMnemonic
 
@@ -151,13 +151,13 @@ console.log(JSON.stringify(result)) // {"privKey":"0xf9d8b666237ad79877cb8356c97
 wallet.importMnemonic(mnemonic, addressName, password)
 ```
 
-校验密码是否正确，然后导入助记词，还原账户信息
+导入助记词，还原账户信息
 
 ##### Parameters
 
 1. `string|array` - 助记词
 2. `string` - 账户名称
-3. `string` - 密码
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -175,7 +175,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 
 ---
 
-<a name="submodule-wallet-importPrivate"></a>
+<a name="wallet-importPrivate"></a>
 
 #### wallet.importPrivate
 
@@ -183,13 +183,13 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 wallet.importPrivate(privKey, addressName, password)
 ```
 
-导入私钥，还原账户信息，在此之前需要校验密码
+导入私钥，还原账户信息
 
 ##### Parameters
 
 1. `string` - 账户私钥
 2. `string` - 账户名称
-3. `string` - 密码
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -207,7 +207,7 @@ console.log(JSON.stringify(result)) // {"privKey":"0xb16043f818288c75627feb6ec52
 
 ---
 
-<a name="submodule-wallet-exportMnemonic"></a>
+<a name="wallet-exportMnemonic"></a>
 
 #### wallet.exportMnemonic
 
@@ -220,7 +220,7 @@ wallet.exportMnemonic(address, password)
 ##### Parameters
 
 1. `string` - 账户地址
-2. `string` - 密码
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -237,7 +237,7 @@ console.log(result) // ['certain', 'blade', 'someone', 'unusual', 'time', 'clari
 
 ---
 
-<a name="submodule-wallet-exportPrivateKey"></a>
+<a name="wallet-exportPrivateKey"></a>
 
 #### wallet.exportPrivateKey
 
@@ -250,7 +250,7 @@ wallet.exportPrivateKey(address, password)
 ##### Parameters
 
 1. `string` - 账户地址
-2. `string` - 密码
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -267,7 +267,7 @@ console.log(result) //"0xf9d8b666237ad79877cb8356c97f3aaa503700bb37a9c19767e97f0
 
 ---
 
-<a name="submodule-wallet-getAccountList"></a>
+<a name="wallet-getAccountList"></a>
 
 #### wallet.getAccountList
 
@@ -275,7 +275,7 @@ console.log(result) //"0xf9d8b666237ad79877cb8356c97f3aaa503700bb37a9c19767e97f0
 wallet.getAccountList()
 ```
 
-拉取账户列表
+获取账户列表
 
 ##### Parameters
 
@@ -284,8 +284,8 @@ wallet.getAccountList()
 ##### Returns
 
 `array` - 账户列表，包括以下字段：
-- `addressName` 账户名
-- `address` 账户地址
+- `string` addressName 账户名
+- `string` address 账户地址
 
 ##### Example
 
@@ -296,7 +296,7 @@ console.log(result) // [ { addressName: 'hello',address: 'Lemo83S826GC446HF2FWQ2
 
 ---
 
-<a name="submodule-wallet-sign"></a>
+<a name="wallet-sign"></a>
 
 #### wallet.sign
 
@@ -304,13 +304,13 @@ console.log(result) // [ { addressName: 'hello',address: 'Lemo83S826GC446HF2FWQ2
 wallet.sign(address, txConfig, password)
 ```
 
-校验密码，签名普通交易
+校验密码，签名交易
 
 ##### Parameters
 
 1. `string` - 账户地址
-2. `object` - 签名的交易信息
-3. `string` - 密码
+2. `object` - [lemo-tx](https://github.com/LemoFoundationLtd/lemo-tx#constructor)的构造函数参数
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -332,7 +332,7 @@ const result = wallet.sign(address, txConfig, password)// {"type":"0","version":
 
 ---
 
-<a name="submodule-wallet-signAsset"></a>
+<a name="wallet-signAsset"></a>
 
 #### wallet.signAsset
 
@@ -340,18 +340,18 @@ const result = wallet.sign(address, txConfig, password)// {"type":"0","version":
 wallet.signAsset(address, txConfig, transferAssetInfo, password)
 ```
 
-校验密码，签名资产交易
+校验密码，签名资产转账交易
 
 ##### Parameters
 
 1. `string` - 账户地址
-2. `object` - 签名的交易信息
-3. `object` - 签名的资产信息
-4. `string` - 密码
+2. `object` - [lemo-tx](https://github.com/LemoFoundationLtd/lemo-tx#constructor)的构造函数参数
+3. `object` - 交易资产信息，包含`assetID`和`transferAmount`字段
+4. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
-`string` - 签名信息字符串
+`string` - 签名后的信息字符串
 
 ##### Example
 
@@ -371,7 +371,7 @@ console.log(JSON.stringify(a)) // {"type":"8","version":"1","chainID":"100","fro
 
 ---
 
-<a name="submodule-wallet-modifyPassword"></a>
+<a name="wallet-modifyPassword"></a>
 
 #### wallet.modifyPassword
 
@@ -400,7 +400,7 @@ wallet.modifyPassword(oldPassword, newPassword)
 
 ---
 
-<a name="submodule-wallet-deleteAccount"></a>
+<a name="wallet-deleteAccount"></a>
 
 #### wallet.deleteAccount
 
@@ -413,7 +413,7 @@ wallet.deleteAccount(address, password)
 ##### Parameters
 
 1. `string` - 账户地址
-2. `string` - 密码
+3. `string` - 通过[setupPassword](#wallet-setupPassword)设置进来的那个密码
 
 ##### Returns
 
@@ -423,7 +423,7 @@ wallet.deleteAccount(address, password)
 
 ```js
 const address = 'Lemo83QTS9H6DDWRC77SG774PF46TD46YA8RCBD7'
-const passWord = '123AbC789'
+const password = '123AbC789'
 wallet.deleteAccount(address, password)
 ```
 

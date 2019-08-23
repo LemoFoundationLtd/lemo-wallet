@@ -27,7 +27,9 @@ yarn add lemo-wallet
 
 ```js
 const LemoWallet = require('lemo-wallet')
-const wallet = new LemoWallet({storage})
+const wallet = new LemoWallet({
+    storage: localStorage
+})
 ```
 
 ##lemoWallet API
@@ -90,7 +92,7 @@ sudo apt-get install yarn
 存储函数对象
 
 -   `setItem(key, value)` 将数据保存到storage的函数，两个参数都是字符串
--   `getItem(key)` 通过key获取保存在storage中的数据，第一个参数和返回值都是字符串
+-   `getItem(key)` 通过key获取保存在storage中的数据，参数和返回值都是字符串
 
 
 ## API

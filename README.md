@@ -27,7 +27,9 @@ yarn add lemo-wallet
 
 ```js
 const LemoWallet = require('lemo-wallet')
-const wallet = new LemoWallet({})
+const wallet = new LemoWallet({
+    storage: localStorage
+})
 ```
 
 ##lemoWallet API
@@ -90,7 +92,7 @@ account information
 Storage functions object
 
 -   `setItem(key, value)` The function to store data into storage, both parameters are strings
--   `getItem(key)` Get the data stored in storage by key, The argument and return value are both strings
+-   `getItem(key)` Get the data stored in storage by key. The argument and return value are both strings
 
 
 ## API

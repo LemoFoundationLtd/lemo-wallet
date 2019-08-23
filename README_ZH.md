@@ -82,7 +82,7 @@ sudo apt-get install yarn
 -   `address` lemo地址
 -   `addressName` 账户名
 -   `privateKey` 私钥，保存时为加密之后的私钥信息
--   `mnemonic` 助记词，由12个单词组成，加密之后存储到用户本地，助记词只支持小写，如果助记词中带有大写字母，会自动转换成小写英文单词
+-   `mnemonic` 助记词，由12个小写英文单词组成，加密之后存储到用户本地
 -   `basePath` 路径，主要为生成私钥的路径
 
 <a name="data-structure-storage"></a>

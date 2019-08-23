@@ -82,7 +82,7 @@ account information
 -   `address` lemoChain address
 -   `addressName` account name
 -   `privateKey` private key, Save as encrypted private key information
--   `mnemonic` mnemonic, consists of 12 words, encrypted and stored locally to the user. Mnemonic words only support lowercase, if the mnemonic with uppercase letters, will automatically convert to lowercase English words
+-   `mnemonic` mnemonic, consisting of 12 lowercase English words, is encrypted and stored locally to the user.
 -   `basePath` path, path to generate the private key
 
 <a name="data-structure-storage"></a>

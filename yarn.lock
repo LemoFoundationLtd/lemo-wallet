@@ -893,6 +893,11 @@ base-x@3.0.4:
   dependencies:
     safe-buffer "^5.0.1"
 
+base64-url@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npm.taobao.org/base64-url/download/base64-url-2.3.2.tgz#d7ea32e80ce3c3ad49f823e77c4dd247c6b81759"
+  integrity sha1-1+oy6Azjw61J+CPnfE3SR8a4F1k=
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/bcrypt-pbkdf/download/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
@@ -2406,6 +2411,11 @@ jest-worker@^23.2.0:
   dependencies:
     merge-stream "^1.0.1"
 
+js-base64@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.npm.taobao.org/js-base64/download/js-base64-2.5.1.tgz#1efa39ef2c5f7980bb1784ade4a8af2de3291121"
+  integrity sha1-Hvo57yxfeYC7F4St5KivLeMpESE=
+
 js-levenshtein@^1.1.3:
   version "1.1.4"
   resolved "http://registry.npm.taobao.org/js-levenshtein/download/js-levenshtein-1.1.4.tgz#3a56e3cbf589ca0081eb22cd9ba0b1290a16d26e"
@@ -2504,14 +2514,17 @@ lcov-parse@^0.0.10:
   version "0.0.10"
   resolved "http://registry.npm.taobao.org/lcov-parse/download/lcov-parse-0.0.10.tgz#1b0b8ff9ac9c7889250582b70b71315d9da6d9a3"
 
-lemo-tx@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/lemo-tx/-/lemo-tx-1.0.0.tgz#e5c95c8e5453c4c94133f76b49a53f1b753121ed"
-  integrity sha512-oBNDOAQjRYW4yZzwL9yEYOT+I4YpZTWY73rmYIj7sJk4rRb2YgsjXdC8V6klkubVgJU33vw2gsMJnVC9PYexuw==
+lemo-tx@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/lemo-tx/download/lemo-tx-1.1.0.tgz?cache=0&sync_timestamp=1566555044677&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flemo-tx%2Fdownload%2Flemo-tx-1.1.0.tgz#2c40d26979284c27a491a938713afaa82ab484a9"
+  integrity sha1-LEDSaXkoTCekkak4cTr6qCq0hKk=
   dependencies:
     "@babel/runtime" "7.3.1"
+    base64-url "^2.3.2"
     bignumber.js "github:LemoFoundationLtd/bignumber.js#fit_otto"
+    js-base64 "^2.5.1"
     lemo-utils "^1.1.0"
+    qs "^6.8.0"
     rollup-plugin-node-globals "1.4.0"
     safe-buffer "5.1.2"
 
@@ -3136,6 +3149,11 @@ punycode@^1.4.1:
 punycode@^2.1.0:
   version "2.1.1"
   resolved "http://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
+
+qs@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.npm.taobao.org/qs/download/qs-6.8.0.tgz?cache=0&sync_timestamp=1566009952956&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqs%2Fdownload%2Fqs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
+  integrity sha1-h7dj8NN8pUIAM0zVe7Lvj2ih0IE=
 
 qs@~6.5.2:
   version "6.5.2"

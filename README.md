@@ -27,9 +27,13 @@ yarn add lemo-wallet
 
 ```js
 const LemoWallet = require('lemo-wallet')
-const wallet = new LemoWallet({
-    storage: localStorage
-})
+const wallet = new LemoWallet({storage: localStorage})
+wallet.setupPassword('12345678')
+const account = wallet.createAccount('my-wallet', '12345678')
+const txConfig = {chainID: 1, to: 'Lemo836BQKCBZ8Z7B7N4G4N4SNGBT24ZZSJQD24D', amount: '100000000000000000000'}
+const signedTxStr = wallet.sign(account.address, txConfig, '12345678')
+console.log(signedTxStr)
+// send the signedTxStr by lemo client SDK
 ```
 
 ##lemoWallet API

@@ -82,7 +82,7 @@ sudo apt-get install yarn
 -   `address` lemo地址
 -   `addressName` 账户名
 -   `privateKey` 私钥，保存时为加密之后的私钥信息
--   `mnemonic` 助记词，由12个单词组成，加密之后存储到用户本地
+-   `mnemonic` 助记词，由12个单词组成，加密之后存储到用户本地，助记词只支持小写，如果助记词中带有大写字母，会自动转换成小写英文单词
 -   `basePath` 路径，主要为生成私钥的路径
 
 <a name="data-structure-storage"></a>
@@ -93,6 +93,18 @@ sudo apt-get install yarn
 
 -   `setItem(key, value)` 将数据保存到storage的函数，两个参数都是字符串
 -   `getItem(key)` 通过key获取保存在storage中的数据，参数和返回值都是字符串
+
+---
+
+## 构造函数
+
+```
+wallet = new LemoWallet({
+     storage: localStorage
+})
+```
+
+-   `storage` 存储函数对象，在浏览器中为localStorage或sessionStorage
 
 
 ## API

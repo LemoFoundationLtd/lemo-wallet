@@ -82,7 +82,7 @@ account information
 -   `address` lemoChain address
 -   `addressName` account name
 -   `privateKey` private key, Save as encrypted private key information
--   `mnemonic` mnemonic, consists of 12 words, encrypted and stored locally to the user
+-   `mnemonic` mnemonic, consists of 12 words, encrypted and stored locally to the user. Mnemonic words only support lowercase, if the mnemonic with uppercase letters, will automatically convert to lowercase English words
 -   `basePath` path, path to generate the private key
 
 <a name="data-structure-storage"></a>
@@ -93,6 +93,18 @@ Storage functions object
 
 -   `setItem(key, value)` The function to store data into storage, both parameters are strings
 -   `getItem(key)` Get the data stored in storage by key. The argument and return value are both strings
+
+---
+
+## Constructor
+
+```
+wallet = new LemoWallet({
+     storage: localStorage
+})
+```
+
+-   `storage` Storage functions object. In the browser, it is localStorage or sessionStorage
 
 
 ## API

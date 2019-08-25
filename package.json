@@ -1,7 +1,7 @@
 {
     "name": "lemo-wallet",
     "namespace": "LemoFoundationLtd",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Lemochain Wallet for private keys management",
     "main": "dist/lemo-wallet.cjs.js",
     "module": "dist/lemo-wallet-browser.esm.js",

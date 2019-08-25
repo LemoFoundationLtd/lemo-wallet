@@ -42,7 +42,7 @@
         "rollup-plugin-visualizer": "^2.5.4"
     },
     "scripts": {
-        "build": "rollup -c",
+        "build": "rollup -c && rollup -c rollup-umd.config.js",
         "dev": "rollup -c -w",
         "test": "nyc mocha --recursive --exit",
         "test:with-err-line-num": "mocha --recursive --exit",

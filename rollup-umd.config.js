@@ -27,6 +27,8 @@ function umdConfig(name) {
                 'lemo-tx': 'lemo-tx/dist/lemo-tx.esm.js',
                 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
                 'process.env.SDK_VERSION': JSON.stringify(pkg.version),
+                'crypto.createHash': 'require(\'create-hash\')',
+                'crypto.createHmac': 'require(\'create-hmac\')',
             }),
             // use resolve so Rollup can find external libraries
             // set browser to true so we could load the 'browser' field of libraries' package.json

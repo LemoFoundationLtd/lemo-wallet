@@ -1,9 +1,26 @@
 import {assert} from 'chai'
 import lemoTx from 'lemo-tx'
 import LemoWallet from '../lib'
-import {ACCOUNT_LIST} from '../lib/const'
+import {ACCOUNT_LIST, PASSWORD_HASH} from '../lib/const'
 import errors from '../lib/errors'
-import {testData, storage} from './data'
+import {testData} from './data'
+
+function copyObj(v) {
+    return JSON.parse(JSON.stringify(v))
+}
+
+const storage = {
+    memorys: {
+        [ACCOUNT_LIST]: JSON.stringify([testData.testenCode]),
+        [PASSWORD_HASH]: '8574dcb5f69e1303cdaf0dc8eae797a9bdc5af09f3e8784165165e93a0019c10', // 123AbC789
+    },
+    setItem(k, v) {
+        this.memorys[k] = copyObj(v)
+    },
+    getItem(k) {
+        return copyObj(this.memorys[k])
+    },
+}
 
 const wallet = new LemoWallet({storage})
 
@@ -39,7 +56,8 @@ describe('import_mnemonic', () => {
         const mnemonic = testData.testDecode.mnemonic
         const name = testData.testDecode.addressName
         const result = wallet.importMnemonic(mnemonic, name, password)
-        assert.equal(result.address, storage.memorys[ACCOUNT_LIST][0].address)
+        const json = JSON.parse(storage.memorys[ACCOUNT_LIST])
+        assert.equal(result.address, json[0].address)
         assert.deepEqual(result.mnemonic, mnemonic.split(' '))
     })
 })
@@ -87,10 +105,11 @@ describe('export_private', () => {
 describe('get_account_list', () => {
     it('normal', () => {
         const result = wallet.getAccountList()
-        assert.deepEqual(result[0].address, storage.memorys[ACCOUNT_LIST][0].address)
+        const json = JSON.parse(storage.memorys[ACCOUNT_LIST])
+        assert.deepEqual(result[0].address, json[0].address)
     })
     it('no_list', () => {
-        storage.memorys[ACCOUNT_LIST] = []
+        storage.memorys[ACCOUNT_LIST] = '[]'
         const result = wallet.getAccountList()
         assert.deepEqual(result, [])
     })
@@ -109,7 +128,7 @@ describe('tx_sign', () => {
         }
         let a = wallet.sign(address, txConfig, password)
         a = JSON.parse(a)
-        assert.equal(a.from, txConfig.from)
+        assert.equal(a.from, address)
         assert.equal(a.amount, txConfig.amount)
     })
     it('sign_createTransferAsset', () => {
@@ -128,9 +147,22 @@ describe('tx_sign', () => {
         const password = '123AbC789'
         const info = wallet.createAccount('hello', password)
         const address = info.address
-        let a = wallet.sign(address, aa, password)
-        a = JSON.parse(a)
-        assert.equal(a.from, txConfig.from)
-        assert.equal(a.amount, '0')
+        let result = wallet.sign(address, aa, password)
+        result = JSON.parse(result)
+        assert.equal(result.from, address)
+        assert.equal(result.amount, '0')
+    })
+    it('no_chainID', () => {
+        const password = '123AbC789'
+        const info = wallet.createAccount('hello', password)
+        const address = info.address
+        const txConfig = {
+            from: 'Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q',
+            to: 'Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG',
+            amount: '1000',
+        }
+        assert.throws(() =>{
+            wallet.sign(address, txConfig, password)
+        }, errors.TXInvalidChainID())
     })
 })

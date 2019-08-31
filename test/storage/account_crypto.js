@@ -13,7 +13,11 @@ const storage = {
         [PASSWORD_HASH]: '8574dcb5f69e1303cdaf0dc8eae797a9bdc5af09f3e8784165165e93a0019c10', // 123AbC789
     },
     setItem(k, v) {
-        this.memorys[k] = copyObj(v)
+        if (typeof v === 'string') {
+            this.memorys[k] = v
+        } else {
+            this.memorys[k] = JSON.stringify(v)
+        }
     },
     getItem(k) {
         return copyObj(this.memorys[k])

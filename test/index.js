@@ -6,16 +6,22 @@ import errors from '../lib/errors'
 import {testData} from './data'
 
 function copyObj(v) {
+    if (!v) {
+        return v
+    }
     return JSON.parse(JSON.stringify(v))
 }
 
 const storage = {
     memorys: {
-        [ACCOUNT_LIST]: JSON.stringify([testData.testenCode]),
         [PASSWORD_HASH]: '8574dcb5f69e1303cdaf0dc8eae797a9bdc5af09f3e8784165165e93a0019c10', // 123AbC789
     },
     setItem(k, v) {
-        this.memorys[k] = copyObj(v)
+        if (typeof v === 'string') {
+            this.memorys[k] = v
+        } else {
+            this.memorys[k] = JSON.stringify(v)
+        }
     },
     getItem(k) {
         return copyObj(this.memorys[k])
@@ -38,6 +44,8 @@ describe('create_account', () => {
     it('normal', () => {
         const password = testData.testDecodePwd
         const a = wallet.createAccount('hello', password)
+        const aa = wallet.getAccountList()
+        assert.equal(aa[0].address, a.address)
         assert.equal(a.addressName, 'hello')
     })
 })
@@ -56,8 +64,6 @@ describe('import_mnemonic', () => {
         const mnemonic = testData.testDecode.mnemonic
         const name = testData.testDecode.addressName
         const result = wallet.importMnemonic(mnemonic, name, password)
-        const json = JSON.parse(storage.memorys[ACCOUNT_LIST])
-        assert.equal(result.address, json[0].address)
         assert.deepEqual(result.mnemonic, mnemonic.split(' '))
     })
 })
@@ -161,7 +167,7 @@ describe('tx_sign', () => {
             to: 'Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG',
             amount: '1000',
         }
-        assert.throws(() =>{
+        assert.throws(() => {
             wallet.sign(address, txConfig, password)
         }, errors.TXInvalidChainID())
     })

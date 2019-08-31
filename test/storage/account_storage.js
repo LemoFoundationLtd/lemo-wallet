@@ -1,8 +1,30 @@
 import {assert} from 'chai'
 import Account from '../../lib/storage/accounts_storage'
-import {testData, storage} from '../data'
+import {testData} from '../data'
 import errors from '../../lib/errors'
+import {ACCOUNT_LIST, PASSWORD_HASH} from '../../lib/const'
 
+
+function copyObj(v) {
+    return JSON.parse(JSON.stringify(v))
+}
+
+const storage = {
+    memorys: {
+        [ACCOUNT_LIST]: JSON.stringify([testData.testenCode]),
+        [PASSWORD_HASH]: '8574dcb5f69e1303cdaf0dc8eae797a9bdc5af09f3e8784165165e93a0019c10', // 123AbC789
+    },
+    setItem(k, v) {
+        if (typeof v === 'string') {
+            this.memorys[k] = v
+        } else {
+            this.memorys[k] = JSON.stringify(v)
+        }
+    },
+    getItem(k) {
+        return copyObj(this.memorys[k])
+    },
+}
 const account = new Account(storage)
 
 describe('account_insertByMnemonic', () => {
@@ -59,16 +81,27 @@ describe('account_insertByPrivate', () => {
     })
 })
 
-// describe('account_listAccounts', () => {
-//     it('get_Account_list ', () => {
-//         const result = account.listAccounts()
-//         console.log(result)
-//         assert.equal(result[0].address, testData.testDecode.address)
-//     })
-// })
+describe('account_listAccounts', () => {
+    it('get_Account_list ', () => {
+        const result = account.listAccounts()
+        assert.equal(result[0].address, testData.testDecode.address)
+    })
+    it('no_list_account ', () => {
+        storage.memorys[ACCOUNT_LIST] = ''
+        const result = account.listAccounts()
+        assert.equal(result, '')
+    })
+})
 
 describe('account_deleteAccount', () => {
-    it('should111 ', () => {
+    it('normal ', () => {
+        storage.memorys[ACCOUNT_LIST] = JSON.stringify([testData.testenCode])
         account.deleteAccount('Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q')
+    })
+    it('no_account ', () => {
+        storage.memorys[ACCOUNT_LIST] = ''
+        assert.throws(() => {
+            account.deleteAccount('Lemo83S826GC446HF2FWQ2895FP8J7ARQTKRGG3Q')
+        }, errors.NoStorageData())
     })
 })

@@ -28,9 +28,7 @@ export const testData = {
 
 export const storage = {
     memorys: {
-        [ACCOUNT_LIST]: [
-            testData.testenCode,
-        ],
+        [ACCOUNT_LIST]: JSON.stringify([testData.testenCode]),
         [PASSWORD_HASH]: '8574dcb5f69e1303cdaf0dc8eae797a9bdc5af09f3e8784165165e93a0019c10', // 123AbC789
     },
     setItem(k, v) {

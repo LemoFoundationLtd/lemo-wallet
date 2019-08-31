@@ -44,9 +44,9 @@ describe('create_account', () => {
     it('normal', () => {
         const password = testData.testDecodePwd
         const a = wallet.createAccount('hello', password)
+        assert.equal(a.addressName, 'hello')
         const aa = wallet.getAccountList()
         assert.equal(aa[0].address, a.address)
-        assert.equal(a.addressName, 'hello')
     })
 })
 // 导入助记词

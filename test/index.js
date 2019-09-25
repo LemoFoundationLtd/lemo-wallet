@@ -132,8 +132,7 @@ describe('tx_sign', () => {
             to: 'Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG',
             amount: '1000',
         }
-        let a = wallet.sign(address, txConfig, password)
-        a = JSON.parse(a)
+        const a = wallet.sign(address, txConfig, password)
         assert.equal(a.from, address)
         assert.equal(a.amount, txConfig.amount)
     })
@@ -153,8 +152,7 @@ describe('tx_sign', () => {
         const password = '123AbC789'
         const info = wallet.createAccount('hello', password)
         const address = info.address
-        let result = wallet.sign(address, aa, password)
-        result = JSON.parse(result)
+        const result = wallet.sign(address, aa, password)
         assert.equal(result.from, address)
         assert.equal(result.amount, '0')
     })

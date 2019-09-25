@@ -31,9 +31,9 @@ const wallet = new LemoWallet({storage: localStorage})
 wallet.setupPassword('12345678')
 const account = wallet.createAccount('my-wallet', '12345678')
 const txConfig = {chainID: 1, to: 'Lemo836BQKCBZ8Z7B7N4G4N4SNGBT24ZZSJQD24D', amount: '100000000000000000000'}
-const signedTxStr = wallet.sign(account.address, txConfig, '12345678')
-console.log(signedTxStr)
-// send the signedTxStr by lemo client SDK
+const signedTx = wallet.sign(account.address, txConfig, '12345678')
+console.log(signedTx.toString())
+// send the signedTx by lemo client SDK
 ```
 
 ##lemoWallet API
@@ -340,7 +340,7 @@ wallet.sign(address, txConfig, password)
 
 ##### Returns
 
-`string` - 签名信息字符串
+`LemoTx` - 签名后的交易对象
 
 ##### Example
 

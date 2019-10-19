@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import lemoTx from 'lemo-tx'
+import LemoTx from 'lemo-tx'
 import LemoWallet from '../lib'
 import {ACCOUNT_LIST, PASSWORD_HASH} from '../lib/const'
 import errors from '../lib/errors'
@@ -132,9 +132,9 @@ describe('tx_sign', () => {
             to: 'Lemo83GN72GYH2NZ8BA729Z9TCT7KQ5FC3CR6DJG',
             amount: '1000',
         }
-        const a = wallet.sign(address, txConfig, password)
-        assert.equal(a.from, address)
-        assert.equal(a.amount, txConfig.amount)
+        const signedTx = wallet.sign(address, txConfig, password)
+        assert.equal(signedTx.from, txConfig.from)
+        assert.equal(signedTx.amount, txConfig.amount)
     })
     it('sign_createTransferAsset', () => {
         const txConfig = {
@@ -147,14 +147,13 @@ describe('tx_sign', () => {
             assetId: '0x14f7e16b4fcfcb6007c23827e686f4dc8c84bfcce12d4feef22804e9b9689947',
             transferAmount: '1000000',
         }
-        const aa = lemoTx.createTransferAsset(txConfig, info1)
-        // console.log(aa)
+        const unsigned = LemoTx.createTransferAsset(txConfig, info1)
         const password = '123AbC789'
         const info = wallet.createAccount('hello', password)
         const address = info.address
-        const result = wallet.sign(address, aa, password)
-        assert.equal(result.from, address)
-        assert.equal(result.amount, '0')
+        const signedTx = wallet.sign(address, unsigned, password)
+        assert.equal(signedTx.from, txConfig.from)
+        assert.equal(signedTx.amount, '0')
     })
     it('no_chainID', () => {
         const password = '123AbC789'

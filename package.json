@@ -13,8 +13,8 @@
         "create-hmac": "^1.1.7",
         "crypto-js": "^3.1.9-1",
         "hdkey": "^1.1.1",
-        "lemo-tx": "^1.1.6",
-        "lemo-utils": "^1.1.6",
+        "lemo-tx": "^1.1.8",
+        "lemo-utils": "^1.1.9",
         "pbkdf2": "^3.0.17",
         "safe-buffer": "5.1.2"
     },

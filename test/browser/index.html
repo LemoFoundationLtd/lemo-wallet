@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Mocha</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="mocha.css" />
-    </head>
-    <body>
-        <div id="mocha"></div>
-        <script src="../../node_modules/mocha/mocha.js"></script>
-        <script>
-            mocha.setup('bdd')
-        </script>
-        <script src="../../dist/lemo-wallet.js"></script>
-        <script src="../../node_modules/chai/chai.js"></script>
-        <script>
-            (() => {
-                const assert = chai.assert
+<head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="mocha.css"/>
+</head>
+<body>
+<div id="mocha"></div>
+<script src="../../node_modules/mocha/mocha.js"></script>
+<script>
+    mocha.setup('bdd')
+</script>
+<script src="../../dist/lemo-wallet.js"></script>
+<script src="../../node_modules/chai/chai.js"></script>
+<script>
+    (() => {
+        const assert = chai.assert
 
-                describe('wallet_createAccount_sign', () => {
-                    it('sign_by_new_account', async () => {
-                        const wallet = new LemoWallet({storage: localStorage})
-                        wallet.setupPassword('12345678')
-                        const account = wallet.createAccount('my-wallet', '12345678')
-                        const txConfig = {chainID: 1, to: 'Lemo836BQKCBZ8Z7B7N4G4N4SNGBT24ZZSJQD24D', amount: '100000000000000000000'}
-                        const signedTxStr = wallet.sign(account.address, txConfig, '12345678')
-                        console.log(signedTxStr)
-                        // assert.equal(signedTxStr, '')
-                    })
-                })
-            })()
-        </script>
-        <script>
-            mocha.run()
-        </script>
-    </body>
+        describe('wallet_createAccount_sign', () => {
+            it('sign_by_new_account', async () => {
+                const wallet = new LemoWallet({storage: localStorage})
+                wallet.setupPassword('12345678')
+                const account = wallet.createAccount('my-wallet', '12345678')
+                const txConfig = {
+                    chainID: 1,
+                    from: account.address,
+                    to: 'Lemo836BQKCBZ8Z7B7N4G4N4SNGBT24ZZSJQD24D',
+                    amount: '100000000000000000000',
+                }
+                const signedTx = wallet.sign(account.address, txConfig, '12345678')
+                console.log(signedTx)
+                assert.equal(signedTx.from, txConfig.from)
+                assert.equal(signedTx.amount, txConfig.amount)
+                assert.equal(signedTx.sigs.length, 1)
+            })
+        })
+    })()
+</script>
+<script>
+    mocha.run()
+</script>
+</body>
 </html>

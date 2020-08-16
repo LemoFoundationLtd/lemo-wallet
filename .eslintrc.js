@@ -9,7 +9,8 @@ module.exports = {
     },
     parserOptions: {
         'ecmaVersion': 6,
-        // 'sourceType': 'script', //module
+        // script: CommonJs, module: esm
+        'sourceType': 'module',
     },
     rules: {
         'import/extensions': ['off', 'always', {
